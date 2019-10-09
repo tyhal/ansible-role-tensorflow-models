@@ -1,0 +1,46 @@
+# TODO Check if docker is gpu capable
+- name: check if gpu capable
+  stat:
+    path: /.dockerenv
+  register: docker
+
+- name: Install dependencies
+  apt:
+    name:
+      - git
+      - python-apt
+      - python-setuptools
+      - python-pip
+      - python-wheel
+      - python
+
+- include_tasks: "cuda.yml"
+  when: not docker.stat.exists
+
+- name: Clone tensorflow project containing models scripts
+  git:
+    repo: 'https://github.com/tensorflow/models.git'
+    dest: /tmp/models
+    version: v{{ tf_model_version }}
+
+- name: Install specific tensorflow GPU release
+  pip:
+    name: tensorflow-gpu=={{ tf_version }}
+  when: not docker.stat.exists
+
+- name: Install specific tensorflow release
+  pip:
+    name: tensorflow=={{ tf_version }}
+  when: docker.stat.exists
+
+- name: Install project deps
+  pip:
+    requirements: /tmp/models/official/requirements.txt
+
+- name: Run mnist # noqa 301
+  command: python mnist_test.py --benchmarks=.
+  args:
+    chdir: /tmp/models/official/mnist
+  environment:
+    LD_LIBRARY_PATH: "/usr/local/cuda-9.0/lib64"
+    PYTHONPATH: /tmp/models

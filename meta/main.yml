@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  author: tyhal
+  role_name: tensorflow-models
+  description: Deploy models and examples built with TensorFlow
+  license: "MIT"
+  min_ansible_version: 2.4
+  platforms:
+    - name: Ubuntu
+      versions:
+        - xenial
+  galaxy_tags:
+    - tensorflow
+    - gpu
+    - cuda
+
+dependencies:
+  - {role: tyhal.cuda}

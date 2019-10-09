@@ -1,0 +1,24 @@
+---
+- name: Add nvidia machine-learning repository
+  apt_repository:
+    repo: "deb http://developer.download.nvidia.com/compute/machine-learning/repos/{{ nvidia_repo_distarch }} /"
+    state: present
+    filename: nvidia-machine-learning
+
+- name: Update cache with new cuda repo
+  apt:
+    update_cache: yes
+
+- name: Install cuda dependencies
+  package:
+    name:
+      # Machine Learning Repo
+      - libcudnn7=*+cuda{{ cuda_dot }}
+      # Cuda Repo
+      - cuda-cublas-{{ cuda_hyphen }}
+      - cuda-cusolver-{{ cuda_hyphen }}
+      - cuda-cufft-{{ cuda_hyphen }}
+      - cuda-curand-{{ cuda_hyphen }}
+      - cuda-cudart-{{ cuda_hyphen }}
+      # TensorRT
+      - libnvinfer5=*+cuda{{ cuda_dot }}
