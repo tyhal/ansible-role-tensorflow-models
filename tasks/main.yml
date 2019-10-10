@@ -46,7 +46,12 @@
     PYTHONPATH: /tmp/models
   register: mnist
 
-- name: collect logs from run
-  copy: content="{{ mnist.stdout }}" dest="{{ config_dir }}/{{ inventory_hostname }}-mnist.log"
+- name: collect stdout logs from run
+  copy: content="{{ mnist.stdout }}" dest="{{ config_dir }}/{{ inventory_hostname }}-mnist.out.log"
+  become: false
+  delegate_to: localhost
+
+- name: collect stderr logs from run
+  copy: content="{{ mnist.stderr }}" dest="{{ config_dir }}/{{ inventory_hostname }}-mnist.err.log"
   become: false
   delegate_to: localhost
