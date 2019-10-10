@@ -38,9 +38,9 @@
     requirements: /tmp/models/official/requirements.txt
 
 - name: Run mnist # noqa 301
-  command: python mnist.py
+  command: "{{ run_cmd }}"
   args:
-    chdir: /tmp/models/official/mnist
+    chdir: "/tmp/models/{{ run_dir }}"
   environment:
     LD_LIBRARY_PATH: "/usr/local/cuda-{{ cuda_dot }}/lib64"
     PYTHONPATH: /tmp/models
