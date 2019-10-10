@@ -38,7 +38,7 @@
     requirements: /tmp/models/official/requirements.txt
 
 - name: Run mnist # noqa 301
-  command: python mnist_test.py --benchmarks=.
+  command: python mnist.py
   args:
     chdir: /tmp/models/official/mnist
   environment:
