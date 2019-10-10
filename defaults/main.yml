@@ -1,6 +1,6 @@
 # Command
 run_cmd: "python mnist_test.py --benchmarks=."
-run_dir: official/mnist
+run_dir: "official/mnist"
 
 # Dep versions
 tf_version: 1.13.2

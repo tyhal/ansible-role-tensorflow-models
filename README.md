@@ -16,5 +16,5 @@ Then you can use this with:
 - hosts: all
   become: yes
   roles:
-    - { role: tyhal.tensorflow-models }
+    - { role: tyhal.tensorflow-models, run_cmd: "python mnist.py", run_dir: "official/mnist" }
 ```

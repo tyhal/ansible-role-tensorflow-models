@@ -37,21 +37,21 @@
   pip:
     requirements: /tmp/models/official/requirements.txt
 
-- name: Run mnist # noqa 301
+- name: Run model # noqa 301
   command: "{{ run_cmd }}"
   args:
     chdir: "/tmp/models/{{ run_dir }}"
   environment:
     LD_LIBRARY_PATH: "/usr/local/cuda-{{ cuda_dot }}/lib64"
     PYTHONPATH: /tmp/models
-  register: mnist
+  register: tensor
 
 - name: collect stdout logs from run
-  copy: content="{{ mnist.stdout }}" dest="{{ config_dir }}/{{ inventory_hostname }}-mnist.out.log"
+  copy: content="{{ tensor.stdout }}" dest="{{ config_dir }}/{{ inventory_hostname }}-tensor.out.log"
   become: false
   delegate_to: localhost
 
 - name: collect stderr logs from run
-  copy: content="{{ mnist.stderr }}" dest="{{ config_dir }}/{{ inventory_hostname }}-mnist.err.log"
+  copy: content="{{ tensor.stderr }}" dest="{{ config_dir }}/{{ inventory_hostname }}-tensor.err.log"
   become: false
   delegate_to: localhost
