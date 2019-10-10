@@ -2,6 +2,11 @@ tf_version: 1.13.2
 tf_model_version: 1.13.0
 cuda_major: 10
 cuda_minor: 0
+
+# Log
+config_dir: "{{inventory_dir}}"
+
+# Helpers
 cuda_hyphen: "{{ cuda_major }}-{{ cuda_minor }}"
 cuda_dot: "{{ cuda_major }}.{{ cuda_minor }}"
 nvidia_repo_distarch: "{{ ansible_distribution | lower }}{{ ansible_distribution_version | replace('.', '') }}/{{ ansible_architecture }}"

@@ -42,5 +42,11 @@
   args:
     chdir: /tmp/models/official/mnist
   environment:
-    LD_LIBRARY_PATH: "/usr/local/cuda-9.0/lib64"
+    LD_LIBRARY_PATH: "/usr/local/cuda-{{ cuda_dot }}/lib64"
     PYTHONPATH: /tmp/models
+  register: mnist
+
+- name: collect logs from run
+  copy: content="{{ mnist.stdout }}" dest="{{ config_dir }}/{{ inventory_hostname }}-mnist.log"
+  become: false
+  delegate_to: localhost
